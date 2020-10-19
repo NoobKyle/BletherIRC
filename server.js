@@ -1,5 +1,8 @@
-const io = require('socket.io')(3000)
+const express = require('express');
+const io = require('socket.io')(3001);
+const app = express();
 
+app.use(express.static('public'));
 const users = {}
 
 io.on('connection', socket => {
@@ -15,3 +18,5 @@ io.on('connection', socket => {
     delete users[socket.id]
   })
 })
+
+app.listen(80, ()=> { console.log('static server started')})
