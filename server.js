@@ -1,8 +1,13 @@
+let port = process.env.PORT || 3000;
+
 const express = require('express');
-const io = require('socket.io')(3001);
 const app = express();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
 
 app.use(express.static('public'));
+
+
 const users = {}
 
 io.on('connection', socket => {
@@ -19,4 +24,6 @@ io.on('connection', socket => {
   })
 })
 
-app.listen(80, ()=> { console.log('static server started')})
+server.listen(port, ()=>{
+    console.log('Started on port: '+ port);
+});
